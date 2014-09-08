@@ -1,0 +1,4 @@
+name = Khiru Updates
+description = This module is used for future updates.
+core = 7.x
+package = Khiru

@@ -1,0 +1,55 @@
+<?php
+
+/**
+ * @file
+ * Install, update, and uninstall functions for the idtgv_updates module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function khiru_updates_install() {
+
+}
+
+/**
+ * Examples for hook_update_N() functions.
+ */
+//  /**
+//   * Enables modules features, views.
+//   */
+//  function idtgv_updates_update_7001() {
+//    $modules = array('features', 'views', ...);
+//    module_enable($modules);
+//  }
+//  /**
+//   * Reverts features.
+//   */
+//  function idtgv_updates_update_7002() {
+//    $features = array(
+//      'idtgv_f_content_types' => array('field_base', 'field_instance', ...),
+//    );
+//    idtgv_updates_features_revert($features);
+//  }
+//  /**
+//   * Sets variable.
+//   */
+//  function idtgv_updates_update_7003() {
+//    // Set jquery version to 1.8
+//    variable_set('jquery_update_jquery_version', '1.8');
+//  }
+
+/**
+ * Enables features.
+ */
+function khiru_updates_update_7001() {
+  $modules = array('ckeditor', 'paypal_donations', 'khiru_general');
+  module_enable($modules);
+}
+
+/**
+ * Sets Khiru theme.
+ */
+function khiru_updates_update_7002() {
+  khiru_profile_manage_themes();
+}

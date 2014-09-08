@@ -43,6 +43,10 @@ dependencies[] = libraries
 dependencies[] = fe_block
 dependencies[] = forum
 dependencies[] = advanced_forum
+dependencies[] = ckeditor
+dependencies[] = paypal_donations
+dependencies[] = khiru_general
+dependencies[] = khiru_updates
 
 ; List of custom modules.
 dependencies[] = khiru_f_general_settings
