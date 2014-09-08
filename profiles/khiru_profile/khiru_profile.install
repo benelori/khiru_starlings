@@ -1,0 +1,210 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the khiru_profile installation profile.
+ */
+
+/**
+ * Implements hook_install().
+ *
+ * Perform actions to set up the site for this profile.
+ *
+ * @see system_install()
+ */
+function khiru_profile_install() {
+  // Add text formats.
+  khiru_profile_add_text_formats();
+  // Create administrator account.
+  khiru_profile_create_administrator();
+  // Set theme settings.
+  khiru_profile_manage_themes();
+  // Sets variables.
+  khiru_profile_set_variables();
+  // Creates main-menu items.
+  khiru_profile_create_main_menu_items();
+  // Enable modules.
+  //khiru_profile_enable_modules();
+}
+
+/**
+ * Enables modules.
+ */
+function khiru_profile_enable_modules() {
+  // The feature khiru_f_block_settings needs to be enabled after the theme
+  // khiru_theme is enabled.
+  $modules = array('khiru_f_block_settings');
+  module_enable($modules);
+}
+
+/**
+ * Adds text formats.
+ */
+function khiru_profile_add_text_formats() {
+  $filtered_html_format = array(
+    'format' => 'filtered_html',
+    'name' => 'Filtered HTML',
+    'weight' => 0,
+    'filters' => array(
+      // URL filter.
+      'filter_url' => array(
+        'weight' => 1,
+        'status' => 1,
+      ),
+      // HTML filter.
+      'filter_html' => array(
+        'weight' => 1,
+        'status' => 1,
+        'settings' => array(
+          'allowed_html' => '<a> <em> <strong> <cite> <blockquote> <code> <ul> <ol> <li> <dl> <dt> <dd> <p> <u>',
+          'filter_html_help' => 1,
+          'filter_html_nofollow' => 0,
+        ),
+      ),
+      // Line break filter.
+      'filter_autop' => array(
+        'weight' => 2,
+        'status' => 1,
+      ),
+      // HTML corrector filter.
+      'filter_htmlcorrector' => array(
+        'weight' => 10,
+        'status' => 1,
+      ),
+    ),
+  );
+  $filtered_html_format = (object) $filtered_html_format;
+  filter_format_save($filtered_html_format);
+
+  $full_html_format = array(
+    'format' => 'full_html',
+    'name' => 'Full HTML',
+    'weight' => 0,
+    'filters' => array(
+      // URL filter.
+      'filter_url' => array(
+        'weight' => 0,
+        'status' => 1,
+      ),
+      // Line break filter.
+      'filter_autop' => array(
+        'weight' => 1,
+        'status' => 1,
+      ),
+      // HTML corrector filter.
+      'filter_htmlcorrector' => array(
+        'weight' => 10,
+        'status' => 1,
+      ),
+    ),
+  );
+  $full_html_format = (object) $full_html_format;
+  filter_format_save($full_html_format);
+
+
+  // Enable default permissions for system roles.
+  $filtered_html_permission = filter_permission_name($filtered_html_format);
+  user_role_grant_permissions(DRUPAL_ANONYMOUS_RID, array(
+    'access content',
+    'access comments',
+    $filtered_html_permission
+  ));
+  user_role_grant_permissions(DRUPAL_AUTHENTICATED_RID, array(
+    'access content',
+    'access comments',
+    'post comments',
+    'skip comment approval',
+    $filtered_html_permission
+  ));
+}
+
+/**
+ * Creates the administrator role.
+ */
+function khiru_profile_create_administrator() {
+  // Create a default role for site administrators, with all available permissions assigned.
+  $admin_role = new stdClass();
+  $admin_role->name = 'administrator';
+  $admin_role->weight = 2;
+  user_role_save($admin_role);
+  user_role_grant_permissions($admin_role->rid, array_keys(module_invoke_all('permission')));
+  // Set this as the administrator role.
+  variable_set('user_admin_role', $admin_role->rid);
+
+  // Assign user 1 the "administrator" role.
+  db_insert('users_roles')->fields(array(
+    'uid' => 1,
+    'rid' => $admin_role->rid
+  ))->execute();
+}
+
+/**
+ * Enable, set default, disable themes.
+ */
+function khiru_profile_manage_themes() {
+  // Enable the admin and khiru_profile_theme themes.
+  $theme_enable = array(
+    'theme_default' => 'bartik',
+    'admin_theme' => variable_get('admin_theme', 'seven'),
+  );
+  theme_enable($theme_enable);
+  foreach ($theme_enable as $var => $theme) {
+    variable_set($var, $theme);
+  }
+
+  //TODO enable custom theme.
+  // Disable default Bartik theme.
+  //theme_disable(array('bartik'));
+}
+
+/**
+ * Sets variables.
+ */
+function khiru_profile_set_variables() {
+  //Sets jquery version to 1.7.
+  variable_set('jquery_update_jquery_version', '1.8');
+  variable_set('install_profile', 'khiru_profile');
+}
+
+/**
+ * Creates main-menu items.
+ */
+function khiru_profile_create_main_menu_items($language_list = array()) {
+  global $language;
+
+  $main_menu_defaults = array(
+    'link_path' => '<front>',
+    'menu_name' => 'main-menu',
+  );
+
+  $main_menu = array(
+    array(
+      'link_title' => t('Home'),
+    ),
+    array(
+      'link_title' => t('Forums'),
+      'link_path' => 'forum',
+    ),
+    array(
+      'link_title' => t('Shops'),
+    ),
+    array(
+      'link_title' => t('Comic'),
+    ),
+    array(
+      'link_title' => t('Games'),
+    ),
+    array(
+      'link_title' => t('Donate'),
+    ),
+  );
+
+  $weight = 0;
+  foreach ($main_menu as $item) {
+    $item = $item + $main_menu_defaults + array('weight' => $weight);
+    menu_link_save($item);
+    $weight++;
+  }
+
+  menu_rebuild();
+}

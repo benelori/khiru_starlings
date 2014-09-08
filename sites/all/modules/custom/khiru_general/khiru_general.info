@@ -1,0 +1,3 @@
+name = Khiru Starlings General Module
+description = Contains general hook implementations
+core = 7.x

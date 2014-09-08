@@ -1,0 +1,54 @@
+name = IDTGV Profile
+description = This is the installation profile for IDTGV.
+core = 7.x
+
+; List of contrib modules.
+dependencies[] = block
+dependencies[] = color
+dependencies[] = comment
+dependencies[] = contextual
+dependencies[] = dashboard
+dependencies[] = help
+dependencies[] = image
+dependencies[] = list
+dependencies[] = menu
+dependencies[] = number
+dependencies[] = options
+dependencies[] = path
+dependencies[] = taxonomy
+dependencies[] = dblog
+dependencies[] = search
+dependencies[] = shortcut
+dependencies[] = toolbar
+dependencies[] = field_ui
+dependencies[] = file
+dependencies[] = rdf
+dependencies[] = entity
+dependencies[] = variable
+dependencies[] = ctools
+dependencies[] = features
+dependencies[] = strongarm
+dependencies[] = jquery_update
+dependencies[] = views
+dependencies[] = views_ui
+dependencies[] = jquery_update
+dependencies[] = token
+dependencies[] = pathauto
+dependencies[] = date
+dependencies[] = date_views
+dependencies[] = date_popup
+dependencies[] = metatag
+dependencies[] = metatag_opengraph
+dependencies[] = libraries
+dependencies[] = fe_block
+dependencies[] = forum
+dependencies[] = advanced_forum
+
+; List of custom modules.
+dependencies[] = khiru_f_general_settings
+
+; List of features.
+
+; List of development modules.
+dependencies[] = module_filter
+dependencies[] = devel

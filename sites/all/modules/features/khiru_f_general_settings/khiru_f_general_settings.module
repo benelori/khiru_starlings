@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the General Settings feature.
+ */
+
+include_once 'khiru_f_general_settings.features.inc';

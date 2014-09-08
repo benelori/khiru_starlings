@@ -1,0 +1,23 @@
+<?php
+
+/**
+ * Implements hook_menu().
+ */
+function khiru_general_menu() {
+  $items['donate'] = array(
+    'title' => t('Donate'),
+    'page callback' => 'khiru_general_donate_page',
+    'access arguments' => array('access content'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  return $items;
+}
+
+/**
+ * Page callback for Donate page.
+ */
+function khiru_general_donate_page() {
+  $items = array();
+  return render($items);
+}
