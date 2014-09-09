@@ -1,0 +1,39 @@
+<?php
+
+/**
+ * @file
+ * Update functions for the khiru_updates module.
+ */
+
+/**
+ * Reverts all the components of the given features.
+ * @param $modules
+ *  An array of features to be reverted. The key is the features name and an
+ * array for each component which needs to be reverted.
+ */
+function khiru_updates_features_revert($modules) {
+  $items = array();
+  // Process modules.
+  foreach ($modules as $module => $components_needed) {
+    if (($feature = feature_load($module, TRUE)) && module_exists($module)) {
+      $components = array();
+      // Forcefully revert all components of a feature.
+      foreach (array_keys($feature->info['features']) as $component) {
+        if (features_hook($component, 'features_revert')) {
+          $components[] = $component;
+        }
+      }
+
+      if (!empty($components_needed) && is_array($components_needed)) {
+        $components = array_intersect($components, $components_needed);
+      }
+      if (!empty($components)) {
+        $items[$module] = $components;
+      }
+    }
+  }
+
+  if (!empty($items)) {
+    features_revert($items);
+  }
+}

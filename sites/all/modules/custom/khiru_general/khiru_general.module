@@ -21,3 +21,14 @@ function khiru_general_donate_page() {
   $items = array();
   return render($items);
 }
+
+function khiru_general_form_comment_form_alter(&$form, &$form_state, &$form_id) {
+  $form['comment_body']['#after_build'][] = 'khiru_general_customize_comment_form';
+  $form['author']['#access'] = FALSE;
+  $form['subject']['#access'] = FALSE;
+}
+
+function khiru_general_customize_comment_form(&$form) {
+  $form[LANGUAGE_NONE][0]['format']['#access'] = FALSE; // Note LANGUAGE_NONE, you may need to set your comment form language code instead
+  return $form;
+}
