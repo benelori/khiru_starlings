@@ -1,0 +1,14 @@
+name = Khiru User Settings
+description = Contains user profile settings
+core = 7.x
+package = Khiru
+dependencies[] = features
+dependencies[] = number
+dependencies[] = text
+features[features_api][] = api:2
+features[field_base][] = field_post_preset_lower
+features[field_base][] = field_post_preset_upper
+features[field_base][] = field_virtual_currency
+features[field_instance][] = user-user-field_post_preset_lower
+features[field_instance][] = user-user-field_post_preset_upper
+features[field_instance][] = user-user-field_virtual_currency

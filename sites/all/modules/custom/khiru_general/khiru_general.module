@@ -22,14 +22,65 @@ function khiru_general_donate_page() {
   return render($items);
 }
 
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
 function khiru_general_form_comment_form_alter(&$form, &$form_state, &$form_id) {
+  global $user;
+
+  // Hides author and subject fields.
   $form['comment_body']['#after_build'][] = 'khiru_general_customize_comment_form';
   $form['author']['#access'] = FALSE;
   $form['subject']['#access'] = FALSE;
+
+  // Adds preset fields with values set from user profile page.
+  $form['post_preset_upper'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Top Preset'),
+    '#weight' => 0,
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+  );
+
+  $user_wrapper = entity_metadata_wrapper('user', $user);
+  $form['post_preset_upper']['preset_top'] = array(
+    '#type' => 'text_format',
+    '#default_value' => $user_wrapper->field_post_preset_upper->value()['value'],
+    '#after_build' => array('khiru_general_customize_comment_form'),
+  );
+  $form['post_preset_lower'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Bottom Preset'),
+    '#weight' => 3,
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+  );
+
+  $form['post_preset_lower']['preset_bottom'] = array(
+    '#type' => 'text_format',
+    '#default_value' => $user_wrapper->field_post_preset_lower->value()['value'],
+    '#after_build' => array('khiru_general_customize_comment_form'),
+  );
+
+  // Checkbox that enables the addition of the post preset content.
+  $form['enable_preset'] = array(
+    '#type' => 'checkbox',
+    '#description' => t('Enable this to add your post presets to your post.'),
+    '#weight' => 4,
+  );
+  $form['#validate'][] = 'khiru_general_comment_form_validate';
 }
 
-function khiru_general_customize_comment_form(&$form) {
+/**
+ * After build function that removes the text format select box.
+ */
+function khiru_general_customize_comment_form($form) {
   $form[LANGUAGE_NONE][0]['format']['#access'] = FALSE;
+  // Setting access for custom field.
+  if ($form['#type'] == 'text_format') {
+    $form['format']['#access'] = FALSE;
+  }
+
   return $form;
 }
 
@@ -52,4 +103,20 @@ function khiru_general_form_user_profile_form_alter(&$form, &$form_state) {
   if (!user_access('edit_user_virtual_currency')) {
     $form['field_virtual_currency']['#access'] = FALSE;
   }
+}
+
+/**
+ * Validation function for the comment form.
+ */
+function khiru_general_comment_form_validate($form, &$form_state) {
+
+  // If checkbox is enabled add preset content to post.
+  if ($form_state['values']['enable_preset'] == 1) {
+    $form_state['values']['comment_body'][LANGUAGE_NONE][0]['value'] =
+      $form_state['values']['preset_top']['value'] .
+      $form_state['values']['comment_body'][LANGUAGE_NONE][0]['value'] .
+      $form_state['values']['preset_bottom']['value'];
+  }
+  // Changes the comment title to the topic title.
+  $form_state['values']['subject'] = $form_state['complete form']['#node']->title;
 }

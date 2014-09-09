@@ -51,6 +51,7 @@ dependencies[] = khiru_updates
 ; List of custom modules.
 dependencies[] = khiru_f_general_settings
 dependencies[] = khiru_f_permissions
+dependencies[] = khiru_user_settings
 
 ; List of features.
 
