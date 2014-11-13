@@ -69,6 +69,7 @@ function khiru_general_form_comment_form_alter(&$form, &$form_state, &$form_id) 
     '#weight' => 4,
   );
   $form['#validate'][] = 'khiru_general_comment_form_validate';
+  $form['actions']['submit']['#value'] = t('Post');
 }
 
 /**
@@ -119,4 +120,10 @@ function khiru_general_comment_form_validate($form, &$form_state) {
   }
   // Changes the comment title to the topic title.
   $form_state['values']['subject'] = $form_state['complete form']['#node']->title;
+}
+
+function khiru_general_comment_view($comment, $view_mode, $langcode) {
+  $comment->content['links']['comment']['#links']['comment-reply']['title'] = t('quote');
+
+  return $comment;
 }

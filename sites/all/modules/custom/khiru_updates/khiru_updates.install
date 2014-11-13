@@ -61,3 +61,13 @@ function khiru_updates_update_7003() {
   $modules = array('khiru_f_permissions', 'khiru_user_settings');
   module_enable($modules);
 }
+
+/**
+ * Reverts features.
+ */
+function khiru_updates_update_7004() {
+  $features = array(
+    'khiru_f_general_settings' => array('ckeditor_profile'),
+  );
+  khiru_updates_features_revert($features);
+}
