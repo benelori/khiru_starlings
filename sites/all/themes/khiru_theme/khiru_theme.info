@@ -1,25 +1,23 @@
 name = Khiru Sub THEME
 description = This is a sub-theme of theme Bartik, made by John for the web site example.com (red, responsive).
 core = 7.x
-base theme = bartik
+base theme = corporate
 
-regions[header] = Header
-regions[help] = Help
-regions[page_top] = Page top
-regions[page_bottom] = Page bottom
-regions[highlighted] = Highlighted
-
-regions[featured] = Featured
-regions[content] = Content
-regions[sidebar_first] = Sidebar first
-regions[sidebar_second] = Sidebar second
-
-regions[triptych_first] = Triptych first
-regions[triptych_middle] = Triptych middle
-regions[triptych_last] = Triptych last
-
-regions[footer_firstcolumn] = Footer first column
-regions[footer_secondcolumn] = Footer second column
-regions[footer_thirdcolumn] = Footer third column
-regions[footer_fourthcolumn] = Footer fourth column
-regions[footer] = Footer
+regions[sidebar_second] = Second Sidebar
+regions[sidebar_first]  = First Sidebar
+regions[front_welcome]  = Front Welcome
+regions[header]         = Header
+regions[preface_first] = Preface first
+regions[preface_middle] = Preface middle
+regions[preface_last] = Preface last
+regions[content_top]    = Content Top
+regions[content]        = Content
+regions[help]           = Help
+regions[footer]         = Footer
+regions[footer_first]   = First Bottom
+regions[footer_second]  = Second Bottom
+regions[footer_third]   = Third Bottom
+regions[bottom_1] = Bottom 1
+regions[bottom_2] = Bottom 2
+regions[bottom_3] = Bottom 3
+regions[bottom_4] = Bottom 4
