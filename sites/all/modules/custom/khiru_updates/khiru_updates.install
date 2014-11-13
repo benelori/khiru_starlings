@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Install, update, and uninstall functions for the idtgv_updates module.
+ * Install, update, and uninstall functions for the khiru_updates module.
  */
 
 /**
@@ -18,29 +18,29 @@ function khiru_updates_install() {
 //  /**
 //   * Enables modules features, views.
 //   */
-//  function idtgv_updates_update_7001() {
+//  function khiru_updates_update_7001() {
 //    $modules = array('features', 'views', ...);
 //    module_enable($modules);
 //  }
 //  /**
 //   * Reverts features.
 //   */
-//  function idtgv_updates_update_7002() {
+//  function khiru_updates_update_7002() {
 //    $features = array(
-//      'idtgv_f_content_types' => array('field_base', 'field_instance', ...),
+//      'khiru_f_content_types' => array('field_base', 'field_instance', ...),
 //    );
-//    idtgv_updates_features_revert($features);
+//    khiru_updates_features_revert($features);
 //  }
 //  /**
 //   * Sets variable.
 //   */
-//  function idtgv_updates_update_7003() {
+//  function khiru_updates_update_7003() {
 //    // Set jquery version to 1.8
 //    variable_set('jquery_update_jquery_version', '1.8');
 //  }
 
 /**
- * Enables features.
+ * Enables modules.
  */
 function khiru_updates_update_7001() {
   $modules = array('ckeditor', 'paypal_donations', 'khiru_general');
@@ -52,4 +52,12 @@ function khiru_updates_update_7001() {
  */
 function khiru_updates_update_7002() {
   khiru_profile_manage_themes();
+}
+
+/**
+ * Enables features.
+ */
+function khiru_updates_update_7003() {
+  $modules = array('khiru_f_permissions');
+  module_enable($modules);
 }

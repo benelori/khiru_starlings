@@ -29,6 +29,27 @@ function khiru_general_form_comment_form_alter(&$form, &$form_state, &$form_id) 
 }
 
 function khiru_general_customize_comment_form(&$form) {
-  $form[LANGUAGE_NONE][0]['format']['#access'] = FALSE; // Note LANGUAGE_NONE, you may need to set your comment form language code instead
+  $form[LANGUAGE_NONE][0]['format']['#access'] = FALSE;
   return $form;
+}
+
+/**
+ * Implements hook_permission().
+ */
+function khiru_general_permission() {
+  return array(
+    'edit_user_virtual_currency' =>  array(
+      'title' => t('Edit Users Virtual Currency'),
+      'description' => t('Permission for editing the amount of a currency a user has.'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function khiru_general_form_user_profile_form_alter(&$form, &$form_state) {
+  if (!user_access('edit_user_virtual_currency')) {
+    $form['field_virtual_currency']['#access'] = FALSE;
+  }
 }
