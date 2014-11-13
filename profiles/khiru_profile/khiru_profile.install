@@ -148,6 +148,7 @@ function khiru_profile_manage_themes() {
     'admin_theme' => variable_get('admin_theme', 'seven'),
   );
   theme_enable($theme_enable);
+  theme_disable(array('bartik'));
   foreach ($theme_enable as $var => $theme) {
     variable_set($var, $theme);
   }
