@@ -43,7 +43,12 @@
 
   <?php print render($content['comments']); ?>
 
+  <div class="forum-jump-links">
+    <a href="#forum-topic-top" title="<?php print t('Jump to top of page'); ?>" class="af-button-small"><span><?php print t("Go to top"); ?></span></a>
+  </div>
+
   <?php if ($content['comment_form']): ?>
+    <br>
     <h2 class="title comment-form"><?php print t('Add new post'); ?></h2>
     <?php print render($content['comment_form']); ?>
   <?php endif; ?>

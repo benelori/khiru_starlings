@@ -67,12 +67,6 @@
     </div>
 
     <div class="forum-post-panel-main clearfix">
-      <?php if (!empty($title)): ?>
-        <div class="forum-post-title">
-          <?php print $title ?>
-        </div>
-      <?php endif; ?>
-
       <div class="forum-post-content">
         <?php
         // We hide the comments and links now so that we can render them later.
@@ -104,10 +98,6 @@
   </div> <?php // End of post wrapper div ?>
 
   <div class="forum-post-footer clearfix">
-    <div class="forum-jump-links">
-      <a href="#forum-topic-top" title="<?php print t('Jump to top of page'); ?>" class="af-button-small"><span><?php print t("Top"); ?></span></a>
-    </div>
-
     <div class="forum-post-links">
       <?php print render($content['links']); ?>
     </div>
