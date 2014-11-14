@@ -21,3 +21,5 @@ regions[bottom_1] = Bottom 1
 regions[bottom_2] = Bottom 2
 regions[bottom_3] = Bottom 3
 regions[bottom_4] = Bottom 4
+
+stylesheets[all][] = css/custom.css

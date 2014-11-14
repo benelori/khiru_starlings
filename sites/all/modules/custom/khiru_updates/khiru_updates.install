@@ -68,3 +68,21 @@ function khiru_updates_update_7003() {
 function khiru_updates_update_7004() {
   khiru_profile_manage_themes();
 }
+
+/**
+ * Enables features.
+ */
+function khiru_updates_update_7005() {
+  $modules = array('khiru_f_block_settings', 'khiru_f_content_types');
+  module_enable($modules);
+}
+
+/**
+ * Reverts features.
+ */
+function khiru_updates_update_7006() {
+  $features = array(
+    'khiru_f_general_settings' => array('variable'),
+  );
+  khiru_updates_features_revert($features);
+}

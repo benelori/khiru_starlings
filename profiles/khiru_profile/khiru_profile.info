@@ -52,6 +52,8 @@ dependencies[] = khiru_updates
 dependencies[] = khiru_f_general_settings
 dependencies[] = khiru_f_permissions
 dependencies[] = khiru_user_settings
+dependencies[] = khiru_f_block_settings
+dependencies[] = khiru_f_content_types
 
 ; List of features.
 
