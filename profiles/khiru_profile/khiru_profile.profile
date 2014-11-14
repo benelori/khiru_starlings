@@ -11,10 +11,10 @@
 function khiru_profile_install_tasks($install_state) {
   // List of tasks which should run while the site install.
   $tasks = array(
-//    'khiru_profile_revert_features' => array(
-//      'display_name' => st('Revert Features'),
-//      'type' => 'normal',
-//    ),
+    'khiru_profile_revert_features' => array(
+      'display_name' => st('Revert Features'),
+      'type' => 'normal',
+    ),
   );
   return $tasks;
 }
@@ -26,6 +26,7 @@ function khiru_profile_revert_features() {
   // Feature revert on site install.
   $features = array(
     'khiru_f_block_settings' => array('fe_block_settings'),
+    'khiru_f_general_settings' => array('variable'),
   );
   khiru_profile_features_revert($features);
 }

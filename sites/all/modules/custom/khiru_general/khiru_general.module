@@ -1,28 +1,6 @@
 <?php
 
 /**
- * Implements hook_menu().
- */
-function khiru_general_menu() {
-  $items['donate'] = array(
-    'title' => t('Donate'),
-    'page callback' => 'khiru_general_donate_page',
-    'access arguments' => array('access content'),
-    'type' => MENU_NORMAL_ITEM,
-  );
-
-  return $items;
-}
-
-/**
- * Page callback for Donate page.
- */
-function khiru_general_donate_page() {
-  $items = array();
-  return render($items);
-}
-
-/**
  * Implements hook_form_FORM_ID_alter().
  */
 function khiru_general_form_comment_form_alter(&$form, &$form_state, &$form_id) {
@@ -119,4 +97,25 @@ function khiru_general_comment_form_validate($form, &$form_state) {
   }
   // Changes the comment title to the topic title.
   $form_state['values']['subject'] = $form_state['complete form']['#node']->title;
+}
+
+/**
+ * Implements hook_block_view_alter().
+ */
+function khiru_general_block_view_alter(&$data, $block) {
+  if ($block->module == 'paypal_donations' && $block->delta == 'paypal_donations_single') {
+    $node = menu_get_object();
+    if (!empty($node)) {
+      $node_wrapper = entity_metadata_wrapper('node', $node);
+      $term_and_services_file = $node_wrapper->field_terms_and_services->value();
+    }
+    $data['content']['#terms_and_services_file'] = $term_and_services_file['uri'];
+  }
+}
+
+/**
+ * Implements hook_theme_registry_alter().
+ */
+function khiru_general_theme_registry_alter(&$theme_registry) {
+  $theme_registry['paypal_donations_single']['variables']['terms_and_services_file'] = NULL;
 }
